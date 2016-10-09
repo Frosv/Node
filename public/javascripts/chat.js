@@ -6,11 +6,11 @@ var Chat = function(socket) {
 //消息发送
 
 Chat.prototype.sendMessage = function(room, text) {
-  var messages = {
+  var message = {
     room: room,
     text: text
   };
-  this.socket.emit('messages', messages);
+  this.socket.emit('messages', message);
 };
 
 //变更房间

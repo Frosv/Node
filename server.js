@@ -61,5 +61,5 @@ var server = http.createServer(function(request, response) {
 // listen
 
 server.listen(3499, function() {
-  console.log('ok');
+  // console.log('ok');
 })
