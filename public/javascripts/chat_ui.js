@@ -32,34 +32,40 @@ function processUserInput(chatApp,socket){
 // console.log(io.connect);
 
 var socket = io.connect();
+
 $(document).ready(function(){
   // console.log(socket);
   var chatApp = new Chat(socket);
   socket.on('nameResult',function(result){
   // console.log(result);
     var message;
+    //连接成功
     if(result.success){
       message = 'You are now known as ' + result.name + '.';
     }else {
       message = result.message;
     }
-    $('#messages'.append(divSystemContentElement(message)));
+    $('#messages').append(divSystemContentElement(message));
   });
   socket.on('joinResult',function(result){
     // console.log(result);
     $('#room').text(result.room);
     $('#messages').append(divSystemContentElement('Room changed.'));
   });
-
-  socket.on('message',function(){
+  //接收消息
+  socket.on('message',function(message){
+    // console.log('ok');
+    // console.log(message);
     var newElement = $('<div></div>').text(message.text);
     $('#messages').append(newElement);
   });
-
+  //获取房间列表
   socket.on('rooms',function(rooms){
+    // console.log('ok');
     $('#roomList').empty();
     for(var room in rooms){
-      room = room.substring(1,room.length);
+      room = room.substring(0,room.length);
+      // console.log(room);
       if(room != ''){
         $('#roomList').append(divEscapedContentElement(room));
       }
@@ -72,11 +78,20 @@ $(document).ready(function(){
   });
 
   setInterval(function(){
+    // console.log('post');
     socket.emit('rooms');
   },1000);
 
+  // setInterval(function(){
+  //   console.log('set');
+  // },1000);
+
   $('#sendMessage').focus();
 
+  // socket.on('aaa',function(socket){
+  //   console.log(socket);
+  // })
+  // console.log(socket);
   $('#sendForm').submit(function(){
     processUserInput(chatApp,socket);
     return false;

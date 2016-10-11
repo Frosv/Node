@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 var chatServer = require('./lib/chat_server.js');
-chatServer.listen(server);
+
 var cache = {};
 
 
@@ -57,6 +57,9 @@ var server = http.createServer(function(request, response) {
   var absPath = './' + filePath;
   serveStatic(response, cache, absPath);
 });
+
+// console.log(server);
+chatServer.listen(server);
 
 // listen
 

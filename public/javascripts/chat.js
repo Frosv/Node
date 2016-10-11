@@ -10,12 +10,13 @@ Chat.prototype.sendMessage = function(room, text) {
     room: room,
     text: text
   };
-  this.socket.emit('messages', message);
+  this.socket.emit('message', message);
 };
 
 //变更房间
 
 Chat.prototype.changeRoom = function(room) {
+  console.log(room);
   this.socket.emit('join', {
     newRoom: room
   });
